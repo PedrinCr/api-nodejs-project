@@ -1,6 +1,6 @@
 import express from 'express';
 import { register, login } from '../controllers/auth_controller.js';
-import { validateToken } from '../utils/generateToken.js';
+import { validateToken } from '../middlewares/validateToken.js';
 
 const router = express.Router();
 
