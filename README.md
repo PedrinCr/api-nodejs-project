@@ -20,22 +20,26 @@ API REST desenvolvida com Node.js, Express e Prisma para autenticação de usuá
 ## 🛠️ Instalação
 
 1. Clone o repositório:
+
 ```bash
 git clone <URL-DO-REPOSITORIO>
 cd api-nodejs-project
 ```
 
 2. Instale as dependências:
+
 ```bash
 npm install
 ```
 
 3. Configure as variáveis de ambiente:
+
 ```bash
 cp .env.example .env
 ```
 
 4. Configure seu `.env`:
+
 ```env
 DATABASE_URL="mongodb+srv://USUARIO:SENHA@cluster.mongodb.net/NOME-DB?appName=Cluster0"
 JWT_SECRET="SUA-CHAVE-SECRETA-AQUI"
@@ -43,6 +47,7 @@ PORT="8080"
 ```
 
 5. Gere o Prisma Client:
+
 ```bash
 npx prisma generate
 ```
@@ -50,6 +55,7 @@ npx prisma generate
 ## 🏃‍♂️ Executando
 
 ### Modo Desenvolvimento
+
 ```bash
 npm run dev
 ```
@@ -61,6 +67,7 @@ A API estará disponível em `http://localhost:8080`
 ### Autenticação
 
 #### Registrar Usuário
+
 ```http
 POST /register
 Content-Type: application/json
@@ -73,6 +80,7 @@ Content-Type: application/json
 ```
 
 #### Login
+
 ```http
 POST /login
 Content-Type: application/json
@@ -84,6 +92,7 @@ Content-Type: application/json
 ```
 
 #### Resposta do Login
+
 ```json
 {
   "user": {
@@ -96,10 +105,25 @@ Content-Type: application/json
 ```
 
 #### Rota Protegida
+
 ```http
 GET /me
 Authorization: Bearer <TOKEN_JWT>
 ```
+
+**Resposta:**
+
+```json
+{
+  "message": "Working!",
+  "userId": "69c2b6073cd7df7d9232fa2d"
+}
+```
+
+**Erros possíveis:**
+
+- `401 Unauthorized` - Token não fornecido
+- `403 Forbidden` - Token inválido ou expirado
 
 ## 🔧 Estrutura do Projeto
 
@@ -108,6 +132,8 @@ api-nodejs-project/
 ├── src/
 │   ├── controllers/
 │   │   └── auth_controller.js    # Controladores de autenticação
+│   ├── middlewares/
+│   │   └── validateToken.js      # Middleware de validação JWT
 │   ├── services/
 │   │   └── auth_service.js        # Lógica de negócio
 │   ├── utils/
@@ -127,6 +153,7 @@ api-nodejs-project/
 ### Schema (MongoDB)
 
 #### Usuários
+
 ```javascript
 {
   id: String (ObjectId),
@@ -148,14 +175,17 @@ api-nodejs-project/
 ### Problemas Comuns
 
 **Erro: "DATABASE_URL não encontrado"**
+
 - Verifique se o arquivo `.env` existe
 - Confirme se as variáveis estão configuradas corretamente
 
 **Erro: "Prisma Client não encontrado"**
+
 - Execute `npx prisma generate`
 - Verifique se o `@prisma/client` está instalado
 
 **Erro: "Token inválido"**
+
 - Verifique se o token JWT está sendo enviado no header `Authorization`
 - Confirme se o `JWT_SECRET` é o mesmo no backend
 
